@@ -36,6 +36,8 @@ export default function TasksPage() {
   const [status, setStatus] = useState<string | null>(null);
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [token, setToken] = useState<string | null>(null);
+  const [authReady, setAuthReady] = useState(false);
 
   const [pendingIds, setPendingIds] = useState<Set<string>>(() => new Set());
 
@@ -51,13 +53,37 @@ export default function TasksPage() {
   useEffect(() => {
     const storedUser = localStorage.getItem("taskflow_user");
     if (storedUser) {
-      setUser(JSON.parse(storedUser) as UserProfile);
+      const parsedUser = JSON.parse(storedUser) as UserProfile;
+      setUser(parsedUser);
+      if (parsedUser.token) {
+        setToken(parsedUser.token);
+      }
     }
+
+    const storedToken = localStorage.getItem("taskflow_token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+
+    setAuthReady(true);
   }, []);
 
-  const token = user?.token ?? localStorage.getItem("taskflow_token");
+  useEffect(() => {
+    if (!authReady) {
+      return;
+    }
+
+    if (!token) {
+      router.replace("/auth");
+    }
+  }, [authReady, router, token]);
 
   useEffect(() => {
+    if (!authReady || !token) {
+      setIsLoading(false);
+      return;
+    }
+
     const fetchTasks = async () => {
       try {
         const response = await fetch(`${apiBase}/api/tasks`, {
@@ -87,7 +113,7 @@ export default function TasksPage() {
     };
 
     fetchTasks();
-  }, [apiBase, token]);
+  }, [apiBase, authReady, token]);
 
   const addTask = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

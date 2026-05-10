@@ -216,10 +216,14 @@ export default function AuthPage() {
 
           {status && (
             <p
-              className={`${styles.status} ${{
-                success: styles.statusSuccess,
-                error: styles.statusError,
-              }[statusType ?? ""] ?? ""}`}
+              className={`${styles.status} ${
+                (
+                  {
+                    success: styles.statusSuccess,
+                    error: styles.statusError,
+                  } as Record<string, string>
+                )[statusType ?? ""] ?? ""
+              }`}
             >
               {status}
             </p>

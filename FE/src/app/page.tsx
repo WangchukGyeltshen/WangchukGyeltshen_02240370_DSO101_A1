@@ -1,1 +1,7 @@
-export { default } from "./auth/page";
+"use client";
+
+import AuthPage from "./auth/page";
+
+export default function HomePage() {
+	return <AuthPage />;
+}
