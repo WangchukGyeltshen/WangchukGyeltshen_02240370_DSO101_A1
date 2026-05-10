@@ -1,6 +1,7 @@
 import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
+import authRouter from './routes/auth.routes';
 import healthRouter from './routes/health.routes';
 import tasksRouter from './routes/tasks.routes';
 
@@ -20,6 +21,7 @@ app.get('/', (_req, res) => {
 });
 
 app.use('/api/health', healthRouter);
+app.use('/api/auth', authRouter);
 app.use('/api/tasks', tasksRouter);
 
 export default app;

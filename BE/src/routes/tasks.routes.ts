@@ -1,8 +1,11 @@
 import { Router } from 'express';
 import mongoose from 'mongoose';
 import TaskModel from '../models/task.model';
+import { requireAuth } from '../middleware/auth.middleware';
 
 const tasksRouter = Router();
+
+tasksRouter.use(requireAuth);
 
 const isValidTaskText = (value: unknown): value is string => {
   return typeof value === 'string' && value.trim().length > 0;
