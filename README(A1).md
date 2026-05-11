@@ -1,14 +1,5 @@
 # DSO101 – Assignment 1
 ## Continuous Integration and Continuous Deployment
-
-| | |
-|---|---|
-| **Student Name** | Wangchuk Gyeltshen |
-| **Student Number** | 02240370 |
-| **Course** | DSO101 |
-| **GitHub Folder** | Wangchuk_02240370_DSO101_A1 |
-| **Docker Hub** | wangchu21 |
-
 ---
 
 # Part A: Deploying a Pre-Built Docker Image
